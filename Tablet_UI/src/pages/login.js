@@ -1,52 +1,52 @@
 // src/pages/Login.js
-import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import React from 'react';
-import Input from '../components/Input';  // Custom Input component
-import Button from '../components/Button';  // Custom Button component
-import Label from '../components/Label';  // Custom Label component
-import { LucideUser, LucideTicket } from 'lucide-react';  // Icons for User and Ticket
-import Card from '../components/Card';  // Custom Card component
+import Input from '../components/Input';
+import Button from '../components/Button';
+import Label from '../components/Label';
+import { LucideUser, LucideTicket } from 'lucide-react';
+import Card from '../components/Card';
 
 const Login = () => {
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-
+    e.preventDefault();
     // ADD Authentication logic here Later!!!!!
-    
-    navigate('/inMotion'); // Redirect to InMotion page
+    navigate('/inMotion');
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <Card className="w-full max-w-md p-8 space-y-6 shadow-lg">
-        <h2 className="text-center text-3xl font-bold text-gray-900">CarryMyLuggage</h2>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}> {/* Add onSubmit handler here */}
-          <div className="rounded-md shadow-sm -space-y-px">
+    <div className="flex items-center justify-center bg-gray-100" style={{ height: '100vh' }}>
+      <Card className="p-8 space-y-6 shadow-lg">
+        <h2 className="text-center text-9xl font-bold text-gray-900 mt-6">CarryMyLuggage</h2>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="rounded-md shadow-sm">
             <div className="mb-4">
-              <Label htmlFor="name" className="text-center w-full block">Name</Label> {/* Centered Label */}
+              <Label htmlFor="name" className="text-center w-full block text-6xl mt-10 mb-5">Full Name</Label>
               <div className="flex items-center">
                 <LucideUser className="w-5 h-5 text-gray-400" />
                 <Input
                   id="name"
                   name="name"
-                  type="text"  // Use text input for Name
+                  type="text"
                   required
                   placeholder="Your Full Name on the Ticket"
+                  className="ml-2"
                 />
               </div>
             </div>
             <div className="mb-4">
-              <Label htmlFor="ticket" className="text-center w-full block">Ticket Number</Label> {/* Centered Label */}
+              <Label htmlFor="ticket" className="text-center w-full block text-6xl mt-5 mb-5">Ticket Number</Label>
               <div className="flex items-center">
                 <LucideTicket className="w-5 h-5 text-gray-400" />
                 <Input
                   id="ticket"
                   name="ticket"
-                  type="text"  // Use text input for Ticket Number
+                  type="text"
                   required
                   placeholder="Enter your boarding ticket number"
+                  className="ml-2"
                 />
               </div>
             </div>
