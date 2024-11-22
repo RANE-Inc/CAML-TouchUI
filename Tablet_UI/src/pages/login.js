@@ -41,12 +41,12 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center bg-gray-100" style={{ height: '100vh' }}>
       <Card className="p-8 space-y-6 shadow-lg">
-        <h2 className="text-center text-9xl font-bold text-gray-900 mt-6">CarryMyLuggage</h2>
+        <h2 className="text-center text-8xl font-bold text-gray900 mt-1">CarryMyLuggage</h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm">
             <div className="mb-4">
-              <Label htmlFor="name" className="text-center w-full block text-6xl mt-10 mb-5">Full Name</Label>
+              <Label htmlFor="name" className="text-center w-full block text-6xl mt-7 mb-2">Full Name</Label>
               <div className="flex items-center">
                 <LucideUser className="w-5 h-5 text-gray-400" />
                 <Input
@@ -62,7 +62,7 @@ const Login = () => {
               </div>
             </div>
             <div className="mb-4">
-              <Label htmlFor="ticket" className="text-center w-full block text-6xl mt-5 mb-5">Ticket Number</Label>
+              <Label htmlFor="ticket" className="text-center w-full block text-6xl mt-5 mb-2">Ticket Number</Label>
               <div className="flex items-center">
                 <LucideTicket className="w-5 h-5 text-gray-400" />
                 <Input
