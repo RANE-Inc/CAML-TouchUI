@@ -41,7 +41,8 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center bg-gray-100" style={{ height: '100vh' }}>
       <Card className="p-8 space-y-6 shadow-lg">
-        <h2 className="text-center text-8xl font-bold text-gray900 mt-1">CarryMyLuggage</h2>
+        <h2 className="text-center text-8xl font-bold text-gray900 mt-1">C.A.M.L.</h2>
+        <h1 className="text-center text-5xl font-bold text-gray900 mt-1">CAML Autonomous Mobility Lift.</h1>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm">

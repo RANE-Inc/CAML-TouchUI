@@ -23,7 +23,7 @@ const InMotion = () => {
     // should be adjust so that it dynamic and pulls from server
     { name: 'Washroom A', id: 1 },
     { name: 'Washroom B', id: 2 },
-    { name: 'Wahroom C', id: 3 },
+    { name: 'Washroom C', id: 3 },
   ];
 
   const togglePause = () => {
@@ -66,7 +66,7 @@ const InMotion = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       {/* Header Bar */}
       <div className="flex justify-between items-center bg-blue-600 text-white py-4 px-8">
-        <h1 className="text-xl font-bold">InMotion App</h1>
+        <h1 className="text-xl font-bold">C.A.M.L.</h1>
         <div className="text-lg font-semibold">
           {isPaused ? 'Paused' : 'In Progress'}
         </div>
