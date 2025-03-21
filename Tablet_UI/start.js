@@ -18,7 +18,7 @@ function runNpmCommand(command, callback) {
 }
 
 // Start React app concurrently
-console.log("Starting React app...");
+console.log("Strting Reacat app...");
 const reactProcess = runNpmCommand('npx react-scripts start');
 
 // Add a 10-second delay before running Electron

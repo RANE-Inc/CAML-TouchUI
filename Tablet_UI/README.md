@@ -72,3 +72,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 need to run source ~/ros2_ws/install/setup.bash
 than run ros2 launch rosbridge_server rosbridge_websocket_launch.xml
 
+need to adjust the websocket path to backend in main.js and /src/components/WebSocketConnection.js

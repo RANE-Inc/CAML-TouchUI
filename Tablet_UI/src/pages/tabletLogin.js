@@ -1,4 +1,4 @@
-// src/pages/Login.js
+// src/pages/tabletLogin.js
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import Input from '../components/Input';
@@ -7,7 +7,7 @@ import Label from '../components/Label';
 import { LucideUser, LucideTicket } from 'lucide-react';
 import Card from '../components/Card';
 
-const Login = () => {
+const tabletLogin = () => {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [ticket, setTicket] = useState('');
@@ -18,7 +18,7 @@ const Login = () => {
 
     // Perform authentication
     try {
-      const response = await fetch('http://localhost:5000/login', {
+      const response = await fetch('http://localhost:4000/tabletLogin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,9 +34,11 @@ const Login = () => {
       }
     } catch (error) {
       console.error('Error:', error);
-      setError('Something went wrong. Please try again.');
+      setError('Invalid Name or Ticket Number.');
     }
   };
+  
+  
 
   return (
     <div className="flex items-center justify-center bg-gray-100" style={{ height: '100vh' }}>
@@ -94,4 +96,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default tabletLogin;
