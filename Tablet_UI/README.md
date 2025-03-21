@@ -72,4 +72,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 need to run source ~/ros2_ws/install/setup.bash
 than run ros2 launch rosbridge_server rosbridge_websocket_launch.xml
 
+<<<<<<< HEAD
 need to adjust the websocket path to backend in main.js and /src/components/WebSocketConnection.js
+=======
+Electron-App.service is how you can start it when OS starts you might need to adjust the path and user (Linux username) info. 
+
+Make sure the system npm path is also correct can use 'which npm' to help locate it
+
+run these commands to startr service
+sudo systemctl enable electron-app
+sudo systemctl start electron-app
+>>>>>>> 747fa02189c8466212e1ff45b7da86ee8249c137
