@@ -10,6 +10,71 @@ const InMotion = () => {
   const [showWashroomPopup, setShowWashroomPopup] = useState(false);
   const [message, setMessage] = useState('');
 
+  // new ros2 functions i need ot test and FUFs on
+  const rclnodejs = require('rclnodejs');
+
+  rclnodejs.init().then(() => {
+    // Create a Node
+    const node = new rclnodejs.Node('fetch_map_points_node');
+
+    // Subscribe to the topic where your map waypoints or points are published (e.g., 'map_points' topic)
+    const mapPointsSub = node.createSubscription(
+      'geometry_msgs/msg/Point', // The message type
+      'map_points', // The topic name
+      (msg) => {
+        console.log('Received Point:', msg);
+      }
+    );
+  
+  // new testing goal request function
+  const rclnodejs = require('rclnodejs');
+
+  rclnodejs.init().then(() => {
+    const node = new rclnodejs.Node('navigate_to_goal_node');
+
+    // Action client for NavigateToPose
+    const client = node.createClient('nav2_msgs/action/NavigateToPose', 'navigate_to_pose');
+
+    // Create a goal message (x, y, orientation)
+    const goalMessage = {
+      target_pose: {
+        header: {
+          frame_id: 'map',
+        },
+        pose: {
+          position: {
+            x: 2.0,   // Target X position
+            y: 3.0,   // Target Y position
+          },
+          orientation: {
+            z: 0.0,   // Target orientation (in quaternion)
+            w: 1.0,   // Target orientation (in quaternion)
+          }
+        }
+      }
+    };
+
+  // Send the goal
+    client.sendGoal(goalMessage).then(response => {
+      console.log('Goal sent successfully:', response);
+    }).catch(err => {
+      console.error('Failed to send goal:', err);
+    });
+
+    // Spin the node to handle interactions
+    rclnodejs.spin(node);
+  }).catch(err => {
+    console.error('Error initializing rclnodejs:', err);
+  });
+
+  //old stuff begins again
+
+  // Spin the node to start receiving messages
+  rclnodejs.spin(node);
+}).catch(err => {
+  console.error('Error:', err);
+});
+
   const restaurantList = [
     // should be adjust so that it dynamic and pulls from server
     { name: 'McDonald', id: 1 },
