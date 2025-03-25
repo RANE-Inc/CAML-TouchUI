@@ -4,6 +4,7 @@ import Login from './pages/tabletLogin'; // Import Login component
 import InMotion from './pages/inMotion'; // Import InMotion component
 import Idle from './pages/idle'; // Import idle component
 import InPickUp from './pages/inPickUp'; // Import inProgress component
+import AwaitingStart from './pages/awaitingStart'; // Import awaitingStart component
 
 const App = () => {
   return (
@@ -20,6 +21,9 @@ const App = () => {
 
         {/* Route for InProgress page */}
         <Route path="/inPickUp" element={<InPickUp />} />
+
+        {/* Route for AwaitingStart page */}
+        <Route path="/awaitingStart" element={<AwaitingStart/>} />
       </Routes>
     </Router>
   );

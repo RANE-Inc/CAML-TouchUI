@@ -27,7 +27,6 @@ const tabletLogin = () => {
           },
         });
         const data = await response.json();
-        console.log("Received data:", data); // Debugging output
   
         if (Array.isArray(data)) {
           const customers = data.map(task => task.customerName);
@@ -54,43 +53,11 @@ const tabletLogin = () => {
     const isValidTicket = validTickets.includes(ticket);
 
     if (isValidCustomer && isValidTicket) {
-      navigate('/inMotion');
+      navigate('/awaitingStart');
     } else {
       setError('Invalid name or ticket.');
     }
   };
-
-  // const navigate = useNavigate();
-  // const [name, setName] = useState('');
-  // const [ticket, setTicket] = useState('');
-  // const [error, setError] = useState('');
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   // Perform authentication
-  //   try {
-  //     const response = await fetch('http://localhost:4000/tabletLogin', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ name, ticket }),
-  //     });
-
-  //     const data = await response.json();
-  //     if (data.success) {
-  //       navigate('/inMotion');
-  //     } else {
-  //       setError(data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     setError('Invalid Name or Ticket Number.');
-  //   }
-  // };
-  
-  
 
   return (
     <div className="flex items-center justify-center bg-gray-100" style={{ height: '100vh' }}>
