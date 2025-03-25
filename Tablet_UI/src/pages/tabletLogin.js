@@ -1,6 +1,6 @@
 // src/pages/tabletLogin.js
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import Label from '../components/Label';
@@ -8,35 +8,87 @@ import { LucideUser, LucideTicket } from 'lucide-react';
 import Card from '../components/Card';
 
 const tabletLogin = () => {
+
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [ticket, setTicket] = useState('');
   const [error, setError] = useState('');
+  const [validCustomers, setValidCustomers] = useState([]);
+  const [validTickets, setValidTickets] = useState([]);
 
+  // Simulated data fetching
+  useEffect(() => {
+    const fetchValidData = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/api/cart/tasks', {
+          method: 'GET', credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
+        console.log("Received data:", data); // Debugging output
+  
+        if (Array.isArray(data)) {
+          const customers = data.map(task => task.customerName);
+          const tickets = data.map(task => task.ticketNumber);
+  
+          setValidCustomers(customers);
+          setValidTickets(tickets);
+        } else {
+          console.error("Unexpected response format:", data);
+        }
+      } catch (error) {
+        console.error('Error fetching valid data:', error);
+      }
+    };
+
+    fetchValidData();
+  }, []);
+
+  // Perform authentication in the FRONTEND
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Perform authentication
-    try {
-      const response = await fetch('http://localhost:4000/tabletLogin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, ticket }),
-      });
+    const isValidCustomer = validCustomers.includes(name);
+    const isValidTicket = validTickets.includes(ticket);
 
-      const data = await response.json();
-      if (data.success) {
-        navigate('/inMotion');
-      } else {
-        setError(data.message);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setError('Invalid Name or Ticket Number.');
+    if (isValidCustomer && isValidTicket) {
+      navigate('/inMotion');
+    } else {
+      setError('Invalid name or ticket.');
     }
   };
+
+  // const navigate = useNavigate();
+  // const [name, setName] = useState('');
+  // const [ticket, setTicket] = useState('');
+  // const [error, setError] = useState('');
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   // Perform authentication
+  //   try {
+  //     const response = await fetch('http://localhost:4000/tabletLogin', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ name, ticket }),
+  //     });
+
+  //     const data = await response.json();
+  //     if (data.success) {
+  //       navigate('/inMotion');
+  //     } else {
+  //       setError(data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     setError('Invalid Name or Ticket Number.');
+  //   }
+  // };
   
   
 

@@ -8,7 +8,7 @@ async function createWindow() {
   const win = new BrowserWindow({
     width: 1024,
     height: 768,
-    kiosk: true,
+    kiosk: false,
     webPreferences: {
       nodeIntegration: false, // Disable nodeIntegration for production
       contextIsolation: true, // Enable contextIsolation for security
