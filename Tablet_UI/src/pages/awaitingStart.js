@@ -49,6 +49,14 @@ const AwaitingStart = () => {
       height: '100vh',
       backgroundColor: 'white'
     }}>
+    <div style={{
+        fontSize: '1.5rem',
+        marginBottom: '20px',
+        fontWeight: 'bold',
+        color: 'black'
+      }}>
+        Please unload your luggage and press START
+      </div>
       <button
         onClick={handleStart}
         style={{
