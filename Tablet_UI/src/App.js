@@ -5,6 +5,8 @@ import InMotion from './pages/inMotion'; // Import InMotion component
 import Idle from './pages/idle'; // Import idle component
 import InPickUp from './pages/inPickUp'; // Import inProgress component
 import AwaitingStart from './pages/awaitingStart'; // Import awaitingStart component
+import EndTrip from './pages/endTrip'; // Import endTrip component
+import ResetCart from './pages/resetCart'; // Import resetCart componenet
 
 const App = () => {
   return (
@@ -24,6 +26,12 @@ const App = () => {
 
         {/* Route for AwaitingStart page */}
         <Route path="/awaitingStart" element={<AwaitingStart/>} />
+
+        {/* Route for EndTrip page */}
+        <Route path="/endTrip" element={<EndTrip/>} />
+
+        {/* Route for ResetCart page */}
+        <Route path="/resetCart" element={<ResetCart/>} />
       </Routes>
     </Router>
   );

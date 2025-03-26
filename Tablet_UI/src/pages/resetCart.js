@@ -5,14 +5,14 @@ import { motion } from 'framer-motion';
 const inProgress = () => {
     const [status, setStatus] = useState(null);
     const navigate = useNavigate();
-    const { taskId } = useParams(); // Should Get taskId dynamically from the URL hopefully
+    const { cartId } = useParams(); // Should Get cartId dynamically from the URL hopefully
  
     useEffect(() => {
-        if (!taskId) return; // Prevent API call if taskId is missing
+        if (!cartId) return; // Prevent API call if castId is missing
 
-        const fetchTaskStatus = async () => {
+        const fetchCartStatus = async () => {
             try {
-                const response = await fetch(`https://localhost:4000/api/cart/task?taskId=${taskId}`, {
+                const response = await fetch(`https://localhost:4000/api/cart/status?cartId=${cartId}`, {
                     method: 'GET', credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
@@ -23,23 +23,23 @@ const inProgress = () => {
                     const data = await response.json();
                     setStatus(data.status);
 
-                    // When status of task is waiting it would hopefully redirect to tabletLogin
-                    if (data.status === "Waiting") {
-                        navigate("/tabletLogin");
+                    // When status of cart is waiting it would hopefully redirect to tabletLogin
+                    if (data.status === "Idle") {
+                        navigate("/");
                     }
                 } else {
-                    console.error("Failed to fetch task status");
+                    console.error("Failed to fetch cart status");
                 }
             } catch (error) {
-                console.error("Error fetching task status:", error);
+                console.error("Error fetching cart status:", error);
             }
         };
 
         // Check every 3 seconds
-        const interval = setInterval(fetchTaskStatus, 3000);
+        const interval = setInterval(fetchCartStatus, 3000);
 
         return () => clearInterval(interval);
-    }, [taskId, navigate]);
+    }, [cartId, navigate]);
 
     return (
         <div style={{
@@ -53,7 +53,7 @@ const inProgress = () => {
         fontSize: '3rem',
         fontWeight: 'bold'
         }}>
-        <div>C.A.M.L Moving to Pick Up Location</div>
+        <div>C.A.M.L Returning to Charging Station</div>
         <motion.div 
             style={{ fontSize: '1.5rem', color: 'blue' }}
             animate={{ opacity: [0, 1, 0] }}

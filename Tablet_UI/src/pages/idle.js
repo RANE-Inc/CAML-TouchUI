@@ -11,7 +11,7 @@ const idle = () => {
         const checkCondition = async () => {
         try {
             const response = await fetch('https://localhost:4000/api/cart/tasks', {
-            method: 'GET',
+            method: 'GET', credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },

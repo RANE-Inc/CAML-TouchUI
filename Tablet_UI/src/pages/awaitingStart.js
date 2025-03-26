@@ -11,7 +11,7 @@ const AwaitingStart = () => {
     const fetchTaskData = async () => {
       try {
         const response = await fetch('http://localhost:4000/api/cart/tasks', {
-          method: 'GET',
+          method: 'GET', credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
         });
@@ -40,6 +40,7 @@ const AwaitingStart = () => {
     navigate('/inMotion');
   };
 
+  //TODO need to onclick function to let them know that they are good to start trip
   return (
     <div style={{
       display: 'flex',
