@@ -25,7 +25,7 @@ const inProgress = () => {
 
                     // When status of cart is waiting it would hopefully redirect to tabletLogin
                     if (data.status === "Idle") {
-                        navigate("/");
+                        navigate("/idle");
                     }
                 } else {
                     console.error("Failed to fetch cart status");

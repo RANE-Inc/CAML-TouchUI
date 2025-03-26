@@ -14,6 +14,7 @@ const App = () => {
       <Routes>
         {/* Set Login as the default route */}
         <Route path="/" element={<Idle />} />
+        <Route path="/idle" element={<Idle />} />
 
         {/* Route for login page */}
         <Route path="/tabletLogin" element={<Login />} />
