@@ -15,13 +15,14 @@ const tabletLogin = () => {
   const [error, setError] = useState('');
   const [validCustomers, setValidCustomers] = useState([]);
   const [validTickets, setValidTickets] = useState([]);
+  const [tasks, setTasks] = useState([]); // Store full task data
 
-  // Simulated data fetching
   useEffect(() => {
     const fetchValidData = async () => {
       try {
         const response = await fetch('http://localhost:4000/api/cart/tasks', {
-          method: 'GET', credentials: 'include',
+          method: 'GET',
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -29,11 +30,9 @@ const tabletLogin = () => {
         const data = await response.json();
   
         if (Array.isArray(data)) {
-          const customers = data.map(task => task.customerName);
-          const tickets = data.map(task => task.ticketNumber);
-  
-          setValidCustomers(customers);
-          setValidTickets(tickets);
+          setTasks(data); // Store full task objects
+          setValidCustomers(data.map(task => task.customerName));
+          setValidTickets(data.map(task => task.ticketNumber));
         } else {
           console.error("Unexpected response format:", data);
         }
@@ -41,23 +40,24 @@ const tabletLogin = () => {
         console.error('Error fetching valid data:', error);
       }
     };
-
+  
     fetchValidData();
   }, []);
 
   // Perform authentication in the FRONTEND
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const isValidCustomer = validCustomers.includes(name);
-    const isValidTicket = validTickets.includes(ticket);
+  // Find the task that matches both the name and ticket number
+  const task = tasks.find(t => t.customerName === name && t.ticketNumber === ticket);
+  if (task) {
+    // Navigate using the taskId
+    navigate(`/awaitingStart/${task.taskId}`);
+  } else {
+    setError('Invalid name or ticket.');
+  }
+};
 
-    if (isValidCustomer && isValidTicket) {
-      navigate('/awaitingStart');
-    } else {
-      setError('Invalid name or ticket.');
-    }
-  };
 
   return (
     <div className="flex items-center justify-center bg-gray-100" style={{ height: '100vh' }}>

@@ -5,7 +5,7 @@ import restaurantIcon from './images/restaurant_icon.png'; // Path to restaurant
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
  
- const InMotion = () => {
+ const inMotion = () => {
     const [isPaused, setIsPaused] = useState(false);
     const [showRestaurantPopup, setShowRestaurantPopup] = useState(false);
     const [showWashroomPopup, setShowWashroomPopup] = useState(false);
@@ -69,11 +69,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 
     // Checks if we are at destination to move on to endTrip.js
     useEffect(() => {
-        if (!taskId) return; // Prevent API call if taskId is missing
-
         const fetchTaskStatus = async () => {
             try {
-                const response = await fetch(`https://localhost:4000/api/cart/task?taskId=${taskId}`, {
+                const response = await fetch(`http://localhost:4000/api/cart/task?taskId=${taskId}`, {
                     method: 'GET', credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
@@ -86,7 +84,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 
                     // When status of task is completed it would hopefully redirect to endTrip.js page
                     if (data.status === "Completed") {
-                        navigate("/endTrip");
+                        const cartId = data.cartId;
+                        console.log(cartId);
+                        navigate('/endTrip/${cartId}');
                     }
                 } else {
                     console.error("Failed to fetch task status");
@@ -212,4 +212,4 @@ import { useNavigate, useParams } from 'react-router-dom';
    );
  };
  
- export default InMotion;
+ export default inMotion;

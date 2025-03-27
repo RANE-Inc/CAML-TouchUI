@@ -2,30 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const inProgress = () => {
+const inPickUp = () => {
     const [status, setStatus] = useState(null);
     const navigate = useNavigate();
     const { taskId } = useParams(); // Should Get taskId dynamically from the URL hopefully
  
     useEffect(() => {
-        if (!taskId) return; // Prevent API call if taskId is missing
-
         const fetchTaskStatus = async () => {
             try {
-                const response = await fetch(`https://localhost:4000/api/cart/task?taskId=${taskId}`, {
+                console.log(taskId);
+                const response = await fetch(`http://localhost:4000/api/cart/task?taskId=${taskId}`, {
                     method: 'GET', credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                 });
-
                 if (response.ok) {
                     const data = await response.json();
                     setStatus(data.status);
 
+                    // Log the data received from the API
+                    console.log('Fetched Cart Status Data:', data);
+
                     // When status of task is waiting it would hopefully redirect to tabletLogin
                     if (data.status === "Waiting") {
-                        navigate("/tabletLogin");
+                        navigate("/tabletLogin/${taskId}");
                     }
                 } else {
                     console.error("Failed to fetch task status");
@@ -65,4 +66,4 @@ const inProgress = () => {
   );
 };
 
-export default inProgress;
+export default inPickUp;

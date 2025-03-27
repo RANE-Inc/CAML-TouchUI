@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const AwaitingStart = () => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
   const [taskData, setTaskData] = useState(null);
+  const { taskId } = useParams(); // Should Get taskId dynamically from the URL hopefully
 
   useEffect(() => {
     // Fetch task data from backend
     const fetchTaskData = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/cart/tasks', {
+        const response = await fetch(`http://localhost:4000/api/cart/tasks`, {
           method: 'GET', credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
         });
 
         const data = await response.json();
@@ -36,11 +36,14 @@ const AwaitingStart = () => {
   }, [navigate]);
 
   const handleStart = () => {
-    console.log('Task data:', taskData); // Use the fetched data here if needed
-    navigate('/inMotion');
+    if (taskData && taskData.length > 0) {
+      const taskId = taskData[0].taskId;
+      navigate(`/inMotion/${taskId}`); // Fixed string interpolation
+    } else {
+      console.log('No task data available');
+    }
   };
 
-  //TODO need to onclick function to let them know that they are good to start trip
   return (
     <div style={{
       display: 'flex',
@@ -50,7 +53,7 @@ const AwaitingStart = () => {
       height: '100vh',
       backgroundColor: 'white'
     }}>
-    <div style={{
+      <div style={{
         fontSize: '1.5rem',
         marginBottom: '20px',
         fontWeight: 'bold',

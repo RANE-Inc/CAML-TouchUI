@@ -1,16 +1,51 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const endTrip = () => {
+const EndTrip = () => {
   const [clicked, setClicked] = useState(false);
+  const [cartId, setCartId] = useState(null); // State to store cartId
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchCartId = async () => {
+      const fetchedCartId = await getCartId();
+      setCartId(fetchedCartId);
+    };
+
+    fetchCartId();
+  }, []); // Run once when component mounts
+
+  const getCartId = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/api/cart/tasks', {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const firstTask = data[0]; // Assuming first task is the next one to be handled
+        return firstTask.cartId;
+      } else {
+        console.error("Error fetching tasks:", response.status);
+      }
+    } catch (error) {
+      console.error("Error during condition check:", error);
+    }
+    return null; // Return null if no task found
+  };
+
   const handleClick = () => {
-    // 5 sec delay to make sure they got off in time
-    setClicked(true);
-    setTimeout(() => {
-      navigate("/resetCart");
-    }, 5000); 
+    if (cartId) {
+      setClicked(true);
+      // 5 sec delay to make sure they got off in time
+      setTimeout(() => {
+        navigate(`/resetCart/${cartId}`);
+      }, 5000);
+    } else {
+      console.error("No cartId found");
+    }
   };
 
   return (
@@ -23,6 +58,6 @@ const endTrip = () => {
       </button>
     </div>
   );
-}
+};
 
-export default endTrip;
+export default EndTrip;

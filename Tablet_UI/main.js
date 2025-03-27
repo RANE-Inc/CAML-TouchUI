@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, session } = require('electron');
 const path = require('path');
 
 async function createWindow() {
@@ -10,9 +10,15 @@ async function createWindow() {
     height: 768,
     kiosk: false,
     webPreferences: {
-      nodeIntegration: false, // Disable nodeIntegration for production
-      contextIsolation: true, // Enable contextIsolation for security
+      nodeIntegration: false, // Keep disabled for security
+      contextIsolation: false, 
     },
+  });
+
+  // Modify request headers to set an allowed origin (needed for CORS issues)
+  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+    details.requestHeaders['Origin'] = 'http://localhost:3000'; // Mimic allowed origin
+    callback({ requestHeaders: details.requestHeaders });
   });
 
   // Load React app (development or production)
@@ -21,6 +27,8 @@ async function createWindow() {
       ? 'http://localhost:3000' // Loads the development server (React) in Electron
       : `file://${path.join(__dirname, 'build/index.html')}` // Loads the production build of React
   );
+
+  win.webContents.openDevTools(); // Open DevTools for debugging
 }
 
 app.whenReady().then(createWindow);

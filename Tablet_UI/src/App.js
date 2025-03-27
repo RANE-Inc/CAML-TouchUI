@@ -17,22 +17,22 @@ const App = () => {
         <Route path="/idle" element={<Idle />} />
 
         {/* Route for login page */}
-        <Route path="/tabletLogin" element={<Login />} />
+        <Route path="/tabletLogin/:taskId" element={<Login />} />
 
         {/* Route for InMotion page */}
-        <Route path="/inMotion" element={<InMotion />} />
+        <Route path="/inMotion/:taskId" element={<InMotion />} />
 
         {/* Route for InProgress page */}
-        <Route path="/inPickUp" element={<InPickUp />} />
+        <Route path="/inPickUp/:taskId" element={<InPickUp />} />
 
         {/* Route for AwaitingStart page */}
-        <Route path="/awaitingStart" element={<AwaitingStart/>} />
+        <Route path="/awaitingStart/:taskId" element={<AwaitingStart/>} />
 
         {/* Route for EndTrip page */}
-        <Route path="/endTrip" element={<EndTrip/>} />
+        <Route path="/endTrip/:cartId" element={<EndTrip/>} />
 
         {/* Route for ResetCart page */}
-        <Route path="/resetCart" element={<ResetCart/>} />
+        <Route path="/resetCart/:cartId" element={<ResetCart/>} />
       </Routes>
     </Router>
   );
