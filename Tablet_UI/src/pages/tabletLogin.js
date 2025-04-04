@@ -1,47 +1,69 @@
-// src/pages/Login.js
+// src/pages/tabletLogin.js
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import Label from '../components/Label';
 import { LucideUser, LucideTicket } from 'lucide-react';
 import Card from '../components/Card';
 
-const Login = () => {
+const tabletLogin = () => {
+
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [ticket, setTicket] = useState('');
   const [error, setError] = useState('');
+  const [validCustomers, setValidCustomers] = useState([]);
+  const [validTickets, setValidTickets] = useState([]);
+  const [tasks, setTasks] = useState([]); // Store full task data
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Perform authentication
-    try {
-      const response = await fetch('http://localhost:5000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, ticket }),
-      });
-
-      const data = await response.json();
-      if (data.success) {
-        navigate('/inMotion');
-      } else {
-        setError(data.message);
+  useEffect(() => {
+    const fetchValidData = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/api/cart/tasks', {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
+  
+        if (Array.isArray(data)) {
+          setTasks(data); // Store full task objects
+          setValidCustomers(data.map(task => task.customerName));
+          setValidTickets(data.map(task => task.ticketNumber));
+        } else {
+          console.error("Unexpected response format:", data);
+        }
+      } catch (error) {
+        console.error('Error fetching valid data:', error);
       }
-    } catch (error) {
-      console.error('Error:', error);
-      setError('Something went wrong. Please try again.');
-    }
-  };
+    };
+  
+    fetchValidData();
+  }, []);
+
+  // Perform authentication in the FRONTEND
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // Find the task that matches both the name and ticket number
+  const task = tasks.find(t => t.customerName === name && t.ticketNumber === ticket);
+  if (task) {
+    // Navigate using the taskId
+    navigate(`/awaitingStart/${task.taskId}`);
+  } else {
+    setError('Invalid name or ticket.');
+  }
+};
+
 
   return (
     <div className="flex items-center justify-center bg-gray-100" style={{ height: '100vh' }}>
       <Card className="p-8 space-y-6 shadow-lg">
-        <h2 className="text-center text-8xl font-bold text-gray900 mt-1">CarryMyLuggage</h2>
+        <h2 className="text-center text-8xl font-bold text-gray900 mt-1">C.A.M.L.</h2>
+        <h1 className="text-center text-5xl font-bold text-gray900 mt-1">CAML Autonomous Mobility Lift.</h1>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm">
@@ -93,4 +115,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default tabletLogin;

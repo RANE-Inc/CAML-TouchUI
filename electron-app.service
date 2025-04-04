@@ -1,0 +1,14 @@
+[Unit]
+Description=Electron App
+After=network.target
+
+[Service]
+WorkingDirectory = /CML-Tablet_UI/Tablet_UI
+ExecStart = /usr/bin/npm start
+Restart = always
+User = Idk-the-User
+Environment=DISPLAY=:0
+ENvironment=XDG_RUNTIME_DIR=/run/user/1000
+
+[Install]
+WantedBy=multi-user.target
